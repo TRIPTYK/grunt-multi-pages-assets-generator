@@ -26,59 +26,73 @@ In your project's Gruntfile, add a section named `multi_pages_assets_generator` 
 grunt.initConfig({
   multi_pages_assets_generator: {
     options: {
-      // Task-specific options go here.
+      jsFolder: 'tmp/js',
+      cssFolder: 'tmp/css',
+      configJSON: 'config.json'
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+    files: {
+      src: 'tmp',
+      dest: 'static'
+    }
+  }
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.jsFolder
 Type: `String`
-Default value: `',  '`
+Default value: `''`
 
-A string value that is used to do something with whatever.
+This folder should contain your prepared Javascript for combination
 
-#### options.punctuation
+#### options.cssFolder
 Type: `String`
-Default value: `'.'`
+Default value: `''`
 
-A string value that is used to do something else with whatever else.
+This folder should contain your prepared CSS for combination
+
+#### options.configJSON
+Type: `String`
+Default value: `''`
+
+This file should exist and have the right values see example lower
+Config example
+
+{
+  "pages": [{
+
+    "idName": "home",
+    "page": "tmp/index.html",
+    "css": [
+      "index.css",
+      "modules/menu.css"
+    ],
+    "js": [
+      "index.js",
+      "modules/menu.js"
+    ]
+  }]
+}
+
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  multi_pages_assets_generator: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
 ```js
 grunt.initConfig({
   multi_pages_assets_generator: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      jsFolder: 'tmp/js',
+      cssFolder: 'tmp/css',
+      configJSON: 'config.json'
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+      src: 'tmp',
+      dest: 'static'
+    }
+  }
 });
 ```
 

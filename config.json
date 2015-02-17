@@ -1,0 +1,15 @@
+{
+  "pages": [{
+
+    "idName": "home",
+    "page": "tmp/index.html",
+    "css": [
+      "index.css",
+      "modules/menu.css"
+    ],
+    "js": [
+      "index.js",
+      "modules/menu.js"
+    ]
+  }]
+}

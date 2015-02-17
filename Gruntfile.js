@@ -20,13 +20,14 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     multi_pages_assets_generator: {
-      default_options: {
-        options: {
-          jsFolder:,
-          sassFolder:,
-          minJsFolder :,
-          cssFolder:
-        }
+      options: {
+        jsFolder: 'tmp/js',
+        cssFolder: 'tmp/css',
+        configJSON: 'conf/config.json'
+      },
+      files: {
+        src: 'tmp',
+        dest: 'static'
       }
     },
 
@@ -36,9 +37,9 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  // grunt.loadNpmTasks('grunt-contrib-jshint');
+  // grunt.loadNpmTasks('grunt-contrib-clean');
+  // grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
