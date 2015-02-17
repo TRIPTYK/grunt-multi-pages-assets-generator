@@ -23,7 +23,7 @@ module.exports = function(grunt) {
       options: {
         jsFolder: 'tmp/js',
         cssFolder: 'tmp/css',
-        configJSON: 'conf/config.json'
+        configJSON: 'config.json'
       },
       files: {
         src: 'tmp',

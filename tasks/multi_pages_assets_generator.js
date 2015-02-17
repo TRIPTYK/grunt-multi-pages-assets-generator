@@ -29,6 +29,8 @@ module.exports = function(grunt) {
         var finalCss =uglifyCSS.processFiles(cssArr,{ maxLineLen: 500, expandVars: true });
         grunt.file.write(destinationFolder+'/css/'+fileName+'.min.css', finalCss );
         grunt.file.write(destinationFolder+'/js/'+fileName+'.min.js', finalJs.code );
+        console.log()
+        grunt.file.copy(item.page, destinationFolder+'/'+item.page)
     });
   }
 
