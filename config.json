@@ -9,7 +9,9 @@
     ],
     "js": [
       "main.js",
-      "modules/ButtonScroll.js"
+      "modules/ButtonScroll.js",
+      "modules/StickyNavUI.js",
+      "modules/IptTpkUI.js"
     ],
     "jsComponents":[
       "jquery/dist/jquery.min.js"

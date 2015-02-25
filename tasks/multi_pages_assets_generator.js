@@ -8,7 +8,7 @@
 
 'use strict';
 var compressor = require('node-minify');
-
+var concat = require('concat');
 module.exports = function(grunt) {
 
   function generate(options, destinationFolder, srcFolder) {
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
       grunt.file.mkdir(destinationFolder);
       grunt.file.mkdir(destinationFolder + '/css');
       grunt.file.mkdir(destinationFolder + '/js');
-      (options.jsCompression)?options.jsCompression='':options.jsCompression='--beautify';
+      (options.jsCompression) ? options.jsCompression = '': options.jsCompression = '--beautify';
       new compressor.minify({
         type: 'uglifyjs',
         fileIn: jsArr,
@@ -41,20 +41,27 @@ module.exports = function(grunt) {
         callback: function(err, min) {
           console.log('UglifyJS::' + destinationFolder + '/css/' + fileName + '.min.js is generated');
 
-          if(err)console.log(err);
+          if (err) console.log(err);
           //        console.log(min);
         }
       });
-      new compressor.minify({
-        type: 'clean-css',
-        fileIn: cssArr,
-        fileOut: destinationFolder + '/css/' + fileName + '.min.css',
-        options: ['--skip-advanced' ],
-        callback: function(err, min) {
-          console.log('Clean-css::' + destinationFolder + '/css/' + fileName + '.min.css is generated');
-          if(err)console.log(err);
-        }
-      });
+      if (options.cssCompression) {
+        new compressor.minify({
+          type: 'clean-css',
+          fileIn: cssArr,
+          fileOut: destinationFolder + '/css/' + fileName + '.min.css',
+          options: [],
+          callback: function(err, min) {
+            console.log('Clean-css::' + destinationFolder + '/css/' + fileName + '.min.css is generated');
+            if (err) console.log(err);
+          }
+        });
+      } else {
+        concat(cssArr, destinationFolder + '/css/' + fileName + '.min.css', function(err) {
+          if (err) console.log(err);
+          console.log('Concat-css::' + destinationFolder + '/css/' + fileName + '.min.css is generated');
+        })
+      }
       var destpage = item.page.replace(srcFolder, '');
       grunt.file.copy(item.page, destinationFolder + '/' + destpage)
 
@@ -74,8 +81,8 @@ module.exports = function(grunt) {
       jsComponents: this.jsComponents,
       cssFolder: this.cssFolder,
       configJSON: this.configJSON,
-      cssCompression : this.cssCompression,
-      jsCompression:this.jsCompression
+      cssCompression: this.cssCompression,
+      jsCompression: this.jsCompression
     });
     // Iterate over all specified file groups.
     // this.files.forEach(function(f) {
