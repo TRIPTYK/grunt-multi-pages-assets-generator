@@ -1,7 +1,7 @@
 {
   "name": "grunt-multi-pages-assets-generator",
   "description": "A grunt plugin to assemble css & js for multiple pages",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "homepage": "https://github.com/TRIPTYK/grunt-multi-pages-assets-generator",
   "author": {
     "name": "TRIPTYK Team",
@@ -29,8 +29,7 @@
   },
   "devDependencies": {
     "grunt": "~0.4.5",
-    "uglify-js": "^2.4.16",
-    "uglifycss": "0.0.11"
+    "node-minify": "^1.0.1"
   },
   "peerDependencies": {
     "grunt": "~0.4.5"

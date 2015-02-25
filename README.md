@@ -28,7 +28,8 @@ grunt.initConfig({
     options: {
       jsFolder: 'tmp/js',
       cssFolder: 'tmp/css',
-      configJSON: 'config.json'
+      configJSON: 'config.json',
+      cssCompression:''
     },
     files: {
       src: 'tmp',
