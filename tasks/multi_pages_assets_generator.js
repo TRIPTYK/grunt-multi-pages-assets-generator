@@ -12,7 +12,8 @@ var uglifyCSS =require('uglifycss');
 
 module.exports = function(grunt) {
 
-  function generate(options, destinationFolder) {
+  function generate(options, destinationFolder,srcFolder) {
+
     //Before startup check for the requirements
     if (!grunt.file.exists(options.configJSON)) grunt.fail.warn("There should be a config.json file at this path " + options.configJSON, 1);
     if (!grunt.file.exists(options.cssFolder)) grunt.fail.warn("There should be a css folder at this path " + options.cssFolder, 2);
@@ -20,7 +21,7 @@ module.exports = function(grunt) {
     var pages = grunt.file.readJSON(options.configJSON).pages;
     pages.map(function(item) {
         var cssArr = item.css.map(function(inItem){return options.cssFolder+'/'+inItem});
-        var jsArr = item.js.map(function(inItem){return options.jsFolder+'/'+inItem});
+        var jsArr = item.jsComponents.map(function(inItem){return options.jsComponents+'/'+inItem}).concat(item.js.map(function(inItem){return options.jsFolder+'/'+inItem}));
         var fileName = item.idName;
         grunt.file.mkdir(destinationFolder);
         grunt.file.mkdir(destinationFolder + '/css');
@@ -29,8 +30,9 @@ module.exports = function(grunt) {
         var finalCss =uglifyCSS.processFiles(cssArr,{ maxLineLen: 500, expandVars: true });
         grunt.file.write(destinationFolder+'/css/'+fileName+'.min.css', finalCss );
         grunt.file.write(destinationFolder+'/js/'+fileName+'.min.js', finalJs.code );
-        console.log()
-        grunt.file.copy(item.page, destinationFolder+'/'+item.page)
+        var destpage = item.page.replace(srcFolder,'');
+       grunt.file.copy(item.page, destinationFolder+'/'+destpage)
+
     });
   }
 
@@ -44,6 +46,7 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       jsFolder: this.jsFolder,
+      jsComponents : this.jsComponents,
       cssFolder: this.cssFolder,
       configJSON: this.configJSON
     });
@@ -51,7 +54,8 @@ module.exports = function(grunt) {
     // this.files.forEach(function(f) {
     //   grunt.log.writeln('File de merde "' + f.dest + '" created.');
     // });
-    generate(options, this.files[0].dest);
+    generate(options, this.files[0].dest, this.filesSrc);
+
   });
 
 };

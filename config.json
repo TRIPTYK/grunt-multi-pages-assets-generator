@@ -1,15 +1,19 @@
 {
-  "pages": [{
+  "pages": [
+  {
 
     "idName": "home",
     "page": "tmp/index.html",
     "css": [
-      "index.css",
-      "modules/menu.css"
+      "main.css"
     ],
     "js": [
-      "index.js",
-      "modules/menu.js"
+      "main.js",
+      "modules/ButtonScroll.js"
+    ],
+    "jsComponents":[
+      "jquery/dist/jquery.min.js"
     ]
-  }]
+  }
+  ]
 }
