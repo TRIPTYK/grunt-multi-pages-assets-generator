@@ -17,6 +17,7 @@ module.exports = function(grunt) {
     if (!grunt.file.exists(options.configJSON)) grunt.fail.warn("There should be a config.json file at this path " + options.configJSON, 1);
     if (!grunt.file.exists(options.cssFolder)) grunt.fail.warn("There should be a css folder at this path " + options.cssFolder, 2);
     if (!grunt.file.exists(options.jsFolder)) grunt.fail.warn("There should be a js folder at this path " + options.jsFolder, 3);
+
     var pages = grunt.file.readJSON(options.configJSON).pages;
     pages.map(function(item) {
       var cssArr = item.css.map(function(inItem) {
@@ -31,12 +32,16 @@ module.exports = function(grunt) {
       grunt.file.mkdir(destinationFolder);
       grunt.file.mkdir(destinationFolder + '/css');
       grunt.file.mkdir(destinationFolder + '/js');
+      (options.jsCompression)?options.jsCompression='':options.jsCompression='--beautify';
       new compressor.minify({
         type: 'uglifyjs',
         fileIn: jsArr,
         fileOut: destinationFolder + '/js/' + fileName + '.min.js',
+        options: [options.jsCompression],
         callback: function(err, min) {
-          console.log(err);
+          console.log('UglifyJS::' + destinationFolder + '/css/' + fileName + '.min.js is generated');
+
+          if(err)console.log(err);
           //        console.log(min);
         }
       });
@@ -44,10 +49,10 @@ module.exports = function(grunt) {
         type: 'clean-css',
         fileIn: cssArr,
         fileOut: destinationFolder + '/css/' + fileName + '.min.css',
+        options: ['--skip-advanced' ],
         callback: function(err, min) {
-          console.log('Clean-css');
-          console.log(err);
-          //        console.log(min);
+          console.log('Clean-css::' + destinationFolder + '/css/' + fileName + '.min.css is generated');
+          if(err)console.log(err);
         }
       });
       var destpage = item.page.replace(srcFolder, '');
@@ -69,7 +74,8 @@ module.exports = function(grunt) {
       jsComponents: this.jsComponents,
       cssFolder: this.cssFolder,
       configJSON: this.configJSON,
-      cssCompression = this.cssCompression
+      cssCompression : this.cssCompression,
+      jsCompression:this.jsCompression
     });
     // Iterate over all specified file groups.
     // this.files.forEach(function(f) {
