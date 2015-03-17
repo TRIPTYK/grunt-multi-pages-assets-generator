@@ -1,7 +1,7 @@
 {
   "name": "grunt-multi-pages-assets-generator",
   "description": "A grunt plugin to assemble css & js for multiple pages",
-  "version": "0.1.3",
+  "version": "0.1.1",
   "homepage": "https://github.com/TRIPTYK/grunt-multi-pages-assets-generator",
   "author": {
     "name": "TRIPTYK Team",
@@ -37,5 +37,27 @@
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "gitHead": "780b599d2618a5c1fbed5702ed3f8d16775fc587",
+  "_id": "grunt-multi-pages-assets-generator@0.1.1",
+  "_shasum": "1788357bc442d179dc7bc32a95f1d129c2f8f0ac",
+  "_from": "grunt-multi-pages-assets-generator@0.1.1",
+  "_npmVersion": "2.5.0",
+  "_nodeVersion": "0.10.36",
+  "_npmUser": {
+    "name": "thecrazydigitalpainter",
+    "email": "gilles@triptyk.eu"
+  },
+  "maintainers": [
+    {
+      "name": "thecrazydigitalpainter",
+      "email": "gilles@triptyk.eu"
+    }
+  ],
+  "dist": {
+    "shasum": "1788357bc442d179dc7bc32a95f1d129c2f8f0ac",
+    "tarball": "http://registry.npmjs.org/grunt-multi-pages-assets-generator/-/grunt-multi-pages-assets-generator-0.1.1.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/grunt-multi-pages-assets-generator/-/grunt-multi-pages-assets-generator-0.1.1.tgz"
 }
