@@ -25,16 +25,19 @@ In your project's Gruntfile, add a section named `multi_pages_assets_generator` 
 ```js
 grunt.initConfig({
   multi_pages_assets_generator: {
-    options: {
-      jsFolder: 'tmp/js',
-      cssFolder: 'tmp/css',
-      configJSON: 'config.json'
-    },
-    files: {
-      src: 'tmp',
-      dest: 'static'
-    }
-  }
+        options: {
+          jsFolder: 'app/2_js',
+          jsComponents :'bower_components',
+          cssFolder: 'tmp/css',
+          jsCompression:true,
+          cssCompression:false,
+          configJSON: 'config.json'
+        },
+        files: {
+          src: 'tmp',
+          dest: 'generated/static'
+        }
+      }
 });
 ```
 
@@ -55,6 +58,16 @@ This folder should contain your prepared CSS for combination
 #### options.configJSON
 Type: `String`
 Default value: `''`
+
+#### options.jsCompression
+Type: `Boolean`
+Default value: `false`
+The js will not be compressed
+
+#### options.cssCompression
+Type: `Boolean`
+Default value: `false`
+The css will not be compressed
 
 This file should exist and have the right values see example lower
 Config example

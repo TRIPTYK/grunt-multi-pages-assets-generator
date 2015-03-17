@@ -10,6 +10,9 @@
     "js": [
       "index.js",
       "modules/menu.js"
+    ],
+    "jsComponents":[
+      "jquery/dist/jquery.min.js"
     ]
   }]
 }

@@ -7,18 +7,24 @@
  */
 
 'use strict';
-var uglifyJS =require('uglify-js');
-var uglifyCSS =require('uglifycss');
-
+var compressor = require('node-minify');
+var concat = require('concat');
 module.exports = function(grunt) {
 
+<<<<<<< HEAD
   function generate(options, destinationFolder,srcFolder) {
+=======
+  function generate(options, destinationFolder, srcFolder) {
+
+>>>>>>> 3be3ba62b6f2b3b1c3d58ebd170facfd600ccae8
     //Before startup check for the requirements
     if (!grunt.file.exists(options.configJSON)) grunt.fail.warn("There should be a config.json file at this path " + options.configJSON, 1);
     if (!grunt.file.exists(options.cssFolder)) grunt.fail.warn("There should be a css folder at this path " + options.cssFolder, 2);
     if (!grunt.file.exists(options.jsFolder)) grunt.fail.warn("There should be a js folder at this path " + options.jsFolder, 3);
+
     var pages = grunt.file.readJSON(options.configJSON).pages;
     pages.map(function(item) {
+<<<<<<< HEAD
         var cssArr = item.css.map(function(inItem){return options.cssFolder+'/'+inItem});
         var jsArr = item.js.map(function(inItem){return options.jsFolder+'/'+inItem});
         var fileName = item.idName;
@@ -31,6 +37,53 @@ module.exports = function(grunt) {
         grunt.file.write(destinationFolder+'/js/'+fileName+'.min.js', finalJs.code );
         var destpage = item.page.replace(srcFolder,'');
         grunt.file.copy(item.page, destinationFolder+'/'+destpage)
+=======
+      var cssArr = item.css.map(function(inItem) {
+        return options.cssFolder + '/' + inItem
+      });
+      var jsArr = item.jsComponents.map(function(inItem) {
+        return options.jsComponents + '/' + inItem
+      }).concat(item.js.map(function(inItem) {
+        return options.jsFolder + '/' + inItem
+      }));
+      var fileName = item.idName;
+      grunt.file.mkdir(destinationFolder);
+      grunt.file.mkdir(destinationFolder + '/css');
+      grunt.file.mkdir(destinationFolder + '/js');
+      (options.jsCompression) ? options.jsCompression = '': options.jsCompression = '--beautify';
+      new compressor.minify({
+        type: 'uglifyjs',
+        fileIn: jsArr,
+        fileOut: destinationFolder + '/js/' + fileName + '.min.js',
+        options: [options.jsCompression],
+        callback: function(err, min) {
+          console.log('UglifyJS::' + destinationFolder + '/css/' + fileName + '.min.js is generated');
+
+          if (err) console.log(err);
+          //        console.log(min);
+        }
+      });
+      if (options.cssCompression) {
+        new compressor.minify({
+          type: 'clean-css',
+          fileIn: cssArr,
+          fileOut: destinationFolder + '/css/' + fileName + '.min.css',
+          options: [],
+          callback: function(err, min) {
+            console.log('Clean-css::' + destinationFolder + '/css/' + fileName + '.min.css is generated');
+            if (err) console.log(err);
+          }
+        });
+      } else {
+        concat(cssArr, destinationFolder + '/css/' + fileName + '.min.css', function(err) {
+          if (err) console.log(err);
+          console.log('Concat-css::' + destinationFolder + '/css/' + fileName + '.min.css is generated');
+        })
+      }
+      var destpage = item.page.replace(srcFolder, '');
+      grunt.file.copy(item.page, destinationFolder + '/' + destpage)
+
+>>>>>>> 3be3ba62b6f2b3b1c3d58ebd170facfd600ccae8
     });
   }
 
@@ -44,8 +97,14 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       jsFolder: this.jsFolder,
+<<<<<<< HEAD
+=======
+      jsComponents: this.jsComponents,
+>>>>>>> 3be3ba62b6f2b3b1c3d58ebd170facfd600ccae8
       cssFolder: this.cssFolder,
-      configJSON: this.configJSON
+      configJSON: this.configJSON,
+      cssCompression: this.cssCompression,
+      jsCompression: this.jsCompression
     });
 
     // Iterate over all specified file groups.
